@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<style>
+    body
+    {
+        padding-top: 60px;
+        
+    }
+</style>
+
+<div>
+    <input type="file" name="file_upload" id="file_upload" />
+    <div id="fileContainer"></div>
+</div>
+<div>
+    @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <text>选择上传文件：</text><input name="file" type="file" id="file" />
+        <br />
+        <br />
+        <input type="submit" name="Upload" value="Upload" />
+    }
+</div>
+@section JS{
+    <script type="text/javascript">
+        $(function () {
+            $("#file_upload").uploadify({
+                height: 30,
+                swf: '/Content/uploadify.swf',
+                uploader: 'http://192.168.0.24/File/File/Upload',
+                width: 120,
+                fileObjName:'file',
+                formData: { 'passkey': 'apptest' },
+               onUploadSuccess: function (file, data, response) {
+                   $("#fileContainer").text(data);
+                }
+            });
+           
+        });
+    </script>}
+
